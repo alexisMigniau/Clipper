@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { Box, Button, Divider, Drawer, Typography, useMediaQuery, Grid } from '@mui/material';
+import { Box, Button, Drawer, useMediaQuery } from '@mui/material';
 import { Twitch as TwitchIcon } from '../icons/twitch'
 import { YouTube as YouTubeIcon, BarChart as BarChartIcon, Movie as MovieIcon } from '@mui/icons-material';
-import { Logo } from './logo';
 import { NavItem } from './nav-item';
 
 const items = [
@@ -26,7 +25,7 @@ const items = [
   }
 ];
 
-export const DashboardSidebar = (props) => {
+export const Sidebar = (props) => {
   const { open, onClose } = props;
   const router = useRouter();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
@@ -129,7 +128,7 @@ export const DashboardSidebar = (props) => {
   );
 };
 
-DashboardSidebar.propTypes = {
+Sidebar.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool
 };
