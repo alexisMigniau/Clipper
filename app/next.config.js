@@ -6,5 +6,13 @@ module.exports = {
       aggregateTimeout: 300,
     }
     return config
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://api:2000/:path*'
+      }
+    ]
   }
 }

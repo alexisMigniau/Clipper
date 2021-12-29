@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { Box, Container, Grid, Autocomplete, TextField, Typography } from '@mui/material';
 import { Layout } from '../components/layout';
 import { useState } from 'react';
+import { searchChannels } from '../services/api'
 
 const Streamer = () => {
   const [streamers, setStreamers] = useState([])
@@ -11,11 +12,9 @@ const Streamer = () => {
     if(e.length > 2)
     {
       clearTimeout(timer)
-
       const newTimer = setTimeout(async () => {
-        console.log("Recherche de streamer via l'API")
+        console.log(await searchChannels(e))
       }, 1000)
-
       setTimer(newTimer)
     }
   }
