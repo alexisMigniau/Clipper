@@ -8,7 +8,7 @@ RUN npm install
 
 COPY /api .
 
-EXPOSE 3000
+EXPOSE 2000
 
 # Utilisation de wait-for-it pour attendre que Mysql soit prêt à recevoir des commandes
 RUN git clone https://github.com/vishnubob/wait-for-it.git /etc/wait

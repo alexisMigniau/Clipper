@@ -19,10 +19,6 @@ module.exports = (app) => {
                 ? routeModule.config(router)
                 : routeModule(router);
 
-            // Fonctionnalité de middlewares globaux par route
-            if(routeModule.middlewares)
-                app.use(path, routeModule.middlewares,route);
-            else
-                app.use(path,route);
+            app.use(path, route);
         });
 };
