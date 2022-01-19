@@ -1,20 +1,26 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Autocomplete, TextField, Typography } from '@mui/material';
 import { Layout } from '../components/layout';
-import { useState } from 'react';
 import { searchChannels } from '../services/api'
+import { useState } from 'react';
 
 const Streamer = () => {
+  
+  // Barre de recherche
   const [streamers, setStreamers] = useState([])
   const [timer, setTimer] = useState(null)
+  const [isMore, setIsMore] = useState(false);
 
   const handleChangeInput = async (e) => {
     if(e.length > 2)
     {
       clearTimeout(timer)
       const newTimer = setTimeout(async () => {
-        console.log(await searchChannels(e))
-      }, 1000)
+        let response = await searchChannels(e)
+        setIsMore(!Object.keys(response.pagination).length === 0)
+        console.log(response.data)
+        setStreamers(response.data)
+      }, 500)
       setTimer(newTimer)
     }
   }
@@ -42,8 +48,15 @@ const Streamer = () => {
             <Autocomplete
               id="streamer-name"
               options={streamers}
-              onInputChange={e => handleChangeInput(e.target.value)}
-              renderInput={(params) => <TextField {...params} label="Ajouter un nouveau streamer à la liste" />}
+              size="small"
+              onInputChange={(e,value, reason) => {
+                if(reason === 'input')
+                  handleChangeInput(value)
+                else if(reason === 'reset')
+                  setStreamers([])
+              }}
+              renderInput={(params) => <TextField {...params} variant="outlined" label="Ajouter un nouveau streamer à la liste"/>}
+              getOptionLabel={option => option.display_name}
             />
           </Grid>
         </Grid>

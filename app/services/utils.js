@@ -2,11 +2,12 @@ async function send_(method, path, data) {
     let headers = {
         "Content-Type": "application/json",
     };
-    return await fetch("/api" + path, {
+    let res = await fetch("/api" + path, {
         method: method,
         headers,
         body: JSON.stringify(data),
     });
+    return await res.json();
 }
 
 export async function post(path, data) {
