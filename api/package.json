@@ -1,0 +1,22 @@
+{
+	"name": "clipper_api",
+	"version": "1.0.0",
+	"description": "API de l'application Clipper",
+	"main": "index.js",
+	"repository": "https://gitlab.com/AlexisGG/orchestration-edt",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon -L --ignore ./test",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"lodash": "^4.17.21",
+		"morgan": "^1.10.0",
+		"mysql2": "^2.2.5",
+		"nodemon": "^2.0.12",
+		"sequelize": "^6.5.0",
+		"node-twitch": "^0.4.5"
+	}
+}

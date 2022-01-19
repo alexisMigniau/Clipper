@@ -1,0 +1,50 @@
+version: '3.8'
+
+services: 
+  db:
+    image: mysql
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes: 
+      - ./db:/docker-entrypoint-initdb.d
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '$PMA_LOCAL_PORT:$PMA_DOCKER_PORT'
+    environment:
+      PMA_PORT: $MYSQL_DOCKER_PORT
+      PMA_HOST: $MYSQL_HOST
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    image: node-mysql-app
+    env_file: .env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    volumes: 
+      - ./api:/api
+      - /api/node_modules
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+  app:
+    image: app-dev
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    ports:
+      - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
+
